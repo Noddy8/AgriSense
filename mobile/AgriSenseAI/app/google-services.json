@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "219483878747",
+    "project_id": "projecta-da90e",
+    "storage_bucket": "projecta-da90e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219483878747:android:8780d3e0c3fea27321567e",
+        "android_client_info": {
+          "package_name": "com.ninjaTurtles.agrisense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7nFyD0xziv-GMn4pBhrPVFdn-fU96gx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

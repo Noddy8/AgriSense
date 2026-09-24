@@ -1,0 +1,120 @@
+<resources>
+    <string name="app_name">AgriSense AI</string>
+    <string name="tagline">Smart Precision Agriculture &amp; Intelligent Irrigation System</string>
+    
+    <!-- Auth Strings -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email Address</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="full_name">Full Name</string>
+    <string name="farm_name_input">Farm Name</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="send_reset_link">Send Reset Link</string>
+    
+    <!-- Redesign Auth Strings -->
+    <string name="ai_core_connected">AI Core Connected</string>
+    <string name="english">English</string>
+    <string name="welcome_back_title">Welcome Back!</string>
+    <string name="login_subtitle">Log in to monitor your farm &amp; crops</string>
+    <string name="email_placeholder">farmer@agrisense.com</string>
+    <string name="password_placeholder">Enter your security passkey</string>
+    <string name="login_btn_text">LOGIN</string>
+    <string name="or_divider">OR</string>
+    <string name="login_mobile_otp">Log in with Mobile OTP</string>
+    <string name="login_fingerprint">Touch fingerprint sensor to sign in</string>
+    <string name="plot_name_demo">Valley East Plot 04</string>
+    <string name="plot_status_demo">24°C • Soil Moisture 68% (Optimal)</string>
+
+    <string name="create_account_title">Create Account</string>
+    <string name="register_banner_title">AgriSense AI • Smart Farming</string>
+    <string name="register_banner_sub">Join AgriSense AI to connect your farm sensors and receive predictive crop advisories.</string>
+    <string name="full_name_label">Full Name *</string>
+    <string name="full_name_hint">e.g. Ramesh Patel</string>
+    <string name="email_label">Email Address *</string>
+    <string name="email_reg_hint">e.g. ramesh.farmer@gmail.com</string>
+    <string name="mobile_label">Mobile Number *</string>
+    <string name="mobile_hint">98765 43210</string>
+    <string name="farm_label">Farm / Estate Name *</string>
+    <string name="farm_hint">e.g. Green Valley Farms</string>
+    <string name="password_label">Password *</string>
+    <string name="password_min_char">Min. 8 characters</string>
+    <string name="password_reg_hint">Create secure password</string>
+    <string name="confirm_password_label">Confirm Password *</string>
+    <string name="confirm_password_hint">Re-enter password</string>
+    <string name="terms_agree">I agree to the Terms of Service &amp; Privacy Policy</string>
+    <string name="create_account_btn">CREATE ACCOUNT</string>
+    <string name="security_encrypted">IoT Cloud Ready • End-to-End Encrypted</string>
+    <string name="version_badge">v2.4</string>
+    <string name="already_account_login">Already have an account? Log In</string>
+    
+    <!-- Navigation Strings -->
+    <string name="nav_home">Home</string>
+    <string name="nav_farm">Farm</string>
+    <string name="nav_ai">AI Assistant</string>
+    <string name="nav_alerts">Alerts</string>
+    <string name="nav_profile">Profile</string>
+    
+    <!-- Dashboard Strings -->
+    <string name="welcome_back">Welcome back,</string>
+    <string name="farmer_demo_name">Green Valley Farm</string>
+    <string name="live_indicator">● Live</string>
+    <string name="soil_moisture">Soil Moisture</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="water_tank">Water Tank</string>
+    <string name="water_flow">Water Flow</string>
+    <string name="irrigation_control">Irrigation Control</string>
+    <string name="pump_status_off">Pump OFF</string>
+    <string name="pump_status_starting">Starting Pump…</string>
+    <string name="pump_status_on">Pump ON</string>
+    <string name="start_irrigation">Start Irrigation</string>
+    <string name="stop_irrigation">Stop Irrigation</string>
+    <string name="ai_recommendations">AI Recommendations</string>
+    <string name="weather_title">Local Weather</string>
+    <string name="view_all">View All</string>
+    <string name="sensor_history">Sensor History</string>
+    
+    <!-- AI Assistant Strings -->
+    <string name="ai_assistant_title">AI Farmer Assistant</string>
+    <string name="ai_assistant_subtitle">Ask anything about crop health, soil, or irrigation.</string>
+    <string name="type_message">Ask AgriSense AI…</string>
+    <string name="quick_check_soil">Check Soil</string>
+    <string name="quick_irrigation_advice">Irrigation Advice</string>
+    <string name="quick_crop_advice">Crop Advice</string>
+    <string name="quick_disease_help">Disease Help</string>
+    
+    <!-- Disease Scanner Strings -->
+    <string name="disease_detection_title">Plant Disease Scanner</string>
+    <string name="disease_detection_subtitle">Snap or upload a leaf photo to diagnose diseases instantly.</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="choose_gallery">Choose Gallery</string>
+    <string name="analyze_plant">ANALYZE PLANT</string>
+    <string name="analyzing_plant">Analyzing Plant…</string>
+    <string name="disease_result_label">AI-Assisted Analysis</string>
+    <string name="confidence_label">Confidence:</string>
+    <string name="treatment_label">Recommended Treatment:</string>
+    
+    <!-- Farm Management Strings -->
+    <string name="my_farms">My Farms</string>
+    <string name="add_new_farm">+ Add New Farm</string>
+    <string name="crop_type">Crop Type</string>
+    <string name="field_size">Field Size</string>
+    <string name="soil_type">Soil Type</string>
+    
+    <!-- Profile & Settings Strings -->
+    <string name="settings">Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="help_support">Help &amp; Support</string>
+    <string name="about_app">About AgriSense AI</string>
+    <string name="logout">Logout</string>
+    <string name="auto_irrigation_trigger">Auto-Irrigation Trigger</string>
+    <string name="alert_notifications">Alert Notifications</string>
+    <string name="unit_preference">Units (Metric / Imperial)</string>
+    <string name="save_settings">Save Preferences</string>
+    <string name="retry">Retry</string>
+    <string name="error_loading_sensors">⚠ Unable to load live sensor data</string>
+</resources>

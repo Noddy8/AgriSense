@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+    <path
+        android:pathData="M20,40A20,20 0,1 1,40 20,20.02 20.02,0 0,1 20,40Z"
+        android:fillColor="#E5E8DF"/>
+    <!-- Straw Hat / Farmer Head silhouette -->
+    <path
+        android:pathData="M20,12c2.76,0 5,2.24 5,5c0,1.2 -0.43,2.3 -1.15,3.16C26.15,21.36 28,23.46 28,26h-16c0,-2.54 1.85,-4.64 4.15,-5.84C15.43,19.3 15,18.2 15,17c0,-2.76 2.24,-5 5,-5z"
+        android:fillColor="#2E7D32"/>
+    <path
+        android:pathData="M11,17h18v2h-18z"
+        android:fillColor="#F9A825"/>
+</vector>
