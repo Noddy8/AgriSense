@@ -5,62 +5,82 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.ninjaTurtles.agrisense.R;
-import com.ninjaTurtles.agrisense.activities.FarmDetailsActivity;
-import com.ninjaTurtles.agrisense.adapters.FarmAdapter;
-import com.ninjaTurtles.agrisense.models.Farm;
-import com.ninjaTurtles.agrisense.viewmodels.FarmViewModel;
-
-import java.util.List;
+import com.ninjaTurtles.agrisense.activities.IrrigationActivity;
+import com.ninjaTurtles.agrisense.activities.RecommendationsActivity;
+import com.ninjaTurtles.agrisense.activities.SensorDataActivity;
+import com.ninjaTurtles.agrisense.activities.SensorHistoryActivity;
+import com.google.android.material.card.MaterialCardView;
 
 public class FarmFragment extends Fragment {
 
-    private FarmViewModel viewModel;
-    private RecyclerView rvFarms;
-    private FarmAdapter adapter;
+    private MaterialCardView cardModuleSoilSensors, cardModuleCropRec, cardModuleFertilizer, cardModuleIrrigation, cardModuleHistory;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_farm, container, false);
-        rvFarms = v.findViewById(R.id.rvFarms);
-        rvFarms.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new FarmAdapter();
-        rvFarms.setAdapter(adapter);
 
-        adapter.setOnFarmClickListener(new FarmAdapter.OnFarmClickListener() {
-            @Override
-            public void onFarmClick(Farm farm) {
-                Intent intent = new Intent(getActivity(), FarmDetailsActivity.class);
-                intent.putExtra("farm_name", farm.getName());
-                intent.putExtra("crop_type", farm.getCropType());
-                intent.putExtra("acres", farm.getAcres());
-                intent.putExtra("soil_type", farm.getSoilType());
-                intent.putExtra("health_score", farm.getHealthScore());
-                startActivity(intent);
-            }
-        });
+        cardModuleSoilSensors = v.findViewById(R.id.cardModuleSoilSensors);
+        cardModuleCropRec = v.findViewById(R.id.cardModuleCropRec);
+        cardModuleFertilizer = v.findViewById(R.id.cardModuleFertilizer);
+        cardModuleIrrigation = v.findViewById(R.id.cardModuleIrrigation);
+        cardModuleHistory = v.findViewById(R.id.cardModuleHistory);
+
+        setupClickListeners();
 
         return v;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(FarmViewModel.class);
-        viewModel.getFarms().observe(getViewLifecycleOwner(), new Observer<List<Farm>>() {
-            @Override
-            public void onChanged(List<Farm> farms) {
-                adapter.setFarms(farms);
-            }
-        });
+    private void setupClickListeners() {
+        if (cardModuleSoilSensors != null) {
+            cardModuleSoilSensors.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), SensorDataActivity.class));
+                }
+            });
+        }
+
+        if (cardModuleCropRec != null) {
+            cardModuleCropRec.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), RecommendationsActivity.class));
+                }
+            });
+        }
+
+        if (cardModuleFertilizer != null) {
+            cardModuleFertilizer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), RecommendationsActivity.class));
+                }
+            });
+        }
+
+        if (cardModuleIrrigation != null) {
+            cardModuleIrrigation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), IrrigationActivity.class));
+                }
+            });
+        }
+
+        if (cardModuleHistory != null) {
+            cardModuleHistory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), SensorHistoryActivity.class));
+                }
+            });
+        }
     }
 }

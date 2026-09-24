@@ -28,6 +28,12 @@
             </intent-filter>
         </activity>
 
+        <!-- Onboarding Activity -->
+        <activity
+            android:name=".activities.OnboardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AgriSense.NoActionBar" />
+
         <!-- Auth Activities -->
         <activity
             android:name=".activities.LoginActivity"
@@ -61,6 +67,10 @@
             android:parentActivityName=".activities.SensorDataActivity" />
         <activity
             android:name=".activities.RecommendationsActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.FertilizerPlanActivity"
             android:exported="false"
             android:parentActivityName=".activities.MainActivity" />
         <activity

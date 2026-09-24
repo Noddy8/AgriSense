@@ -10,19 +10,19 @@ import com.ninjaTurtles.agrisense.R;
 import com.ninjaTurtles.agrisense.utils.AnimationHelper;
 import com.google.android.material.button.MaterialButton;
 
-public class SensorHistoryActivity extends AppCompatActivity {
+public class FertilizerPlanActivity extends AppCompatActivity {
 
-    private ImageView btnBack, btnShare;
-    private MaterialButton btnGetCsv;
+    private ImageView btnBack;
+    private MaterialButton btnScheduleFertilizer, btnAskAiAssistant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sensor_history);
+        setContentView(R.layout.activity_fertilizer_plan);
 
         btnBack = findViewById(R.id.btnBack);
-        btnShare = findViewById(R.id.btnShare);
-        btnGetCsv = findViewById(R.id.btnGetCsv);
+        btnScheduleFertilizer = findViewById(R.id.btnScheduleFertilizer);
+        btnAskAiAssistant = findViewById(R.id.btnAskAiAssistant);
 
         if (btnBack != null) {
             btnBack.setOnClickListener(new View.OnClickListener() {
@@ -34,21 +34,22 @@ public class SensorHistoryActivity extends AppCompatActivity {
             });
         }
 
-        if (btnShare != null) {
-            btnShare.setOnClickListener(new View.OnClickListener() {
+        if (btnScheduleFertilizer != null) {
+            btnScheduleFertilizer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(SensorHistoryActivity.this, "Sharing Telemetry Report...", Toast.LENGTH_SHORT).show();
+                    AnimationHelper.animateButtonPress(FertilizerPlanActivity.this, btnScheduleFertilizer);
+                    Toast.makeText(FertilizerPlanActivity.this, "Fertilizer Application Scheduled for Day 42 - 45", Toast.LENGTH_SHORT).show();
                 }
             });
         }
 
-        if (btnGetCsv != null) {
-            btnGetCsv.setOnClickListener(new View.OnClickListener() {
+        if (btnAskAiAssistant != null) {
+            btnAskAiAssistant.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AnimationHelper.animateButtonPress(SensorHistoryActivity.this, btnGetCsv);
-                    Toast.makeText(SensorHistoryActivity.this, "Exporting 24-hour agronomy telemetry dataset (CSV)...", Toast.LENGTH_SHORT).show();
+                    AnimationHelper.animateButtonPress(FertilizerPlanActivity.this, btnAskAiAssistant);
+                    Toast.makeText(FertilizerPlanActivity.this, "Opening AI Farmer Assistant...", Toast.LENGTH_SHORT).show();
                 }
             });
         }

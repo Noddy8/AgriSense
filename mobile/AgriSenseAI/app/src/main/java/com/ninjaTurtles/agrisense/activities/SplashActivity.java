@@ -64,9 +64,14 @@ public class SplashActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
+                android.content.SharedPreferences prefs = getSharedPreferences(OnboardingActivity.PREFS_NAME, MODE_PRIVATE);
+                boolean isOnboardingCompleted = prefs.getBoolean(OnboardingActivity.KEY_ONBOARDING_COMPLETED, false);
+
                 com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
                 Intent intent;
-                if (auth.getCurrentUser() != null) {
+                if (!isOnboardingCompleted) {
+                    intent = new Intent(SplashActivity.this, OnboardingActivity.class);
+                } else if (auth.getCurrentUser() != null) {
                     intent = new Intent(SplashActivity.this, MainActivity.class);
                 } else {
                     intent = new Intent(SplashActivity.this, LoginActivity.class);

@@ -31,6 +31,18 @@
     <color name="live_green_alpha">#4D4CAF50</color>
     <color name="card_stroke">#E5E8DF</color>
     
+    <!-- Onboarding specific colors -->
+    <color name="green_badge_bg">#C8E6C9</color>
+    <color name="green_badge_text">#1B5E20</color>
+    <color name="card_selected_bg">#E8F5E9</color>
+    <color name="card_selected_stroke">#2E7D32</color>
+    <color name="card_unselected_bg">#FFFFFF</color>
+    <color name="card_unselected_stroke">#E4E8E0</color>
+    <color name="map_dark_overlay">#BF1B2A1E</color>
+    <color name="ph_acidic">#E65100</color>
+    <color name="ph_optimal">#2E7D32</color>
+    <color name="ph_alkaline">#1565C0</color>
+    
     <!-- Neutral Dark / Glass -->
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
