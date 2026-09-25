@@ -8,131 +8,119 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.ninjaTurtles.agrisense.R;
 import com.ninjaTurtles.agrisense.activities.DiseaseDetectionActivity;
-import com.ninjaTurtles.agrisense.adapters.ChatAdapter;
-import com.ninjaTurtles.agrisense.models.ChatMessage;
-import com.ninjaTurtles.agrisense.utils.AnimationHelper;
-import com.ninjaTurtles.agrisense.viewmodels.AiViewModel;
+import com.ninjaTurtles.agrisense.activities.FertilizerPlanActivity;
 import com.google.android.material.button.MaterialButton;
-
-import java.util.List;
 
 public class AIFragment extends Fragment {
 
-    private AiViewModel viewModel;
-    private RecyclerView rvMessages;
-    private ChatAdapter adapter;
-    private EditText etInput;
-    private ImageView btnSend;
-    private TextView tvTypingIndicator;
-
-    private MaterialButton btnQuickSoil, btnQuickIrrigation, btnQuickCrop, btnQuickDisease;
+    private EditText etChatMessage;
+    private ImageView btnSendMessage, btnCameraScan, btnVoiceMic;
+    private View tabAgronomistAi, tabPlantDoctorScan;
+    private TextView btnChipSoil, btnChipNitrogen;
+    private MaterialButton btnScheduleUrea, btnFollowUpQuestion;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ai, container, false);
 
-        rvMessages = v.findViewById(R.id.rvChatMessages);
-        etInput = v.findViewById(R.id.etChatMessage);
-        btnSend = v.findViewById(R.id.btnSendMessage);
-        tvTypingIndicator = v.findViewById(R.id.tvTypingIndicator);
+        etChatMessage = v.findViewById(R.id.etChatMessage);
+        btnSendMessage = v.findViewById(R.id.btnSendMessage);
+        btnCameraScan = v.findViewById(R.id.btnCameraScan);
+        btnVoiceMic = v.findViewById(R.id.btnVoiceMic);
 
-        btnQuickSoil = v.findViewById(R.id.btnQuickSoil);
-        btnQuickIrrigation = v.findViewById(R.id.btnQuickIrrigation);
-        btnQuickCrop = v.findViewById(R.id.btnQuickCrop);
-        btnQuickDisease = v.findViewById(R.id.btnQuickDisease);
+        tabAgronomistAi = v.findViewById(R.id.tabAgronomistAi);
+        tabPlantDoctorScan = v.findViewById(R.id.tabPlantDoctorScan);
 
-        rvMessages.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new ChatAdapter();
-        rvMessages.setAdapter(adapter);
+        btnChipSoil = v.findViewById(R.id.btnChipSoil);
+        btnChipNitrogen = v.findViewById(R.id.btnChipNitrogen);
 
-        setupQuickButtons();
+        btnScheduleUrea = v.findViewById(R.id.btnScheduleUrea);
+        btnFollowUpQuestion = v.findViewById(R.id.btnFollowUpQuestion);
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnimationHelper.animateButtonPress(getContext(), btnSend);
-                String msg = etInput.getText().toString();
-                if (!msg.trim().isEmpty()) {
-                    viewModel.sendMessage(msg);
-                    etInput.setText("");
+        if (tabPlantDoctorScan != null) {
+            tabPlantDoctorScan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), DiseaseDetectionActivity.class));
                 }
-            }
-        });
+            });
+        }
+
+        if (btnCameraScan != null) {
+            btnCameraScan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), DiseaseDetectionActivity.class));
+                }
+            });
+        }
+
+        if (btnVoiceMic != null) {
+            btnVoiceMic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getContext(), "Listening in Punjabi / Hindi / English...", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        if (btnChipSoil != null) {
+            btnChipSoil.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    etChatMessage.setText("Explain my soil condition for Sector 4B");
+                }
+            });
+        }
+
+        if (btnChipNitrogen != null) {
+            btnChipNitrogen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    etChatMessage.setText("Why is nitrogen top-dressing needed this week?");
+                }
+            });
+        }
+
+        if (btnScheduleUrea != null) {
+            btnScheduleUrea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), FertilizerPlanActivity.class));
+                }
+            });
+        }
+
+        if (btnFollowUpQuestion != null) {
+            btnFollowUpQuestion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    etChatMessage.setText("What happens if I delay Urea application by 3 days?");
+                }
+            });
+        }
+
+        if (btnSendMessage != null) {
+            btnSendMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String text = etChatMessage.getText().toString().trim();
+                    if (!text.isEmpty()) {
+                        Toast.makeText(getContext(), "Asking AI Assistant: " + text, Toast.LENGTH_SHORT).show();
+                        etChatMessage.setText("");
+                    }
+                }
+            });
+        }
 
         return v;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(AiViewModel.class);
-
-        viewModel.getChatMessages().observe(getViewLifecycleOwner(), new Observer<List<ChatMessage>>() {
-            @Override
-            public void onChanged(List<ChatMessage> chatMessages) {
-                adapter.setMessages(chatMessages);
-                if (chatMessages.size() > 0) {
-                    rvMessages.smoothScrollToPosition(chatMessages.size() - 1);
-                }
-            }
-        });
-
-        viewModel.getIsTyping().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isTyping) {
-                if (isTyping) {
-                    tvTypingIndicator.setVisibility(View.VISIBLE);
-                    AnimationHelper.startPulse(getContext(), tvTypingIndicator);
-                } else {
-                    tvTypingIndicator.clearAnimation();
-                    tvTypingIndicator.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
-
-    private void setupQuickButtons() {
-        btnQuickSoil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnimationHelper.animateButtonPress(getContext(), btnQuickSoil);
-                viewModel.sendMessage("Check Soil Moisture Level");
-            }
-        });
-
-        btnQuickIrrigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnimationHelper.animateButtonPress(getContext(), btnQuickIrrigation);
-                viewModel.sendMessage("Irrigation Advice for Wheat");
-            }
-        });
-
-        btnQuickCrop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnimationHelper.animateButtonPress(getContext(), btnQuickCrop);
-                viewModel.sendMessage("Crop Health Status");
-            }
-        });
-
-        btnQuickDisease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnimationHelper.animateButtonPress(getContext(), btnQuickDisease);
-                startActivity(new Intent(getActivity(), DiseaseDetectionActivity.class));
-            }
-        });
     }
 }
