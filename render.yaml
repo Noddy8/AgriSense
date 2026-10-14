@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: agrisense-crop-ai
+    runtime: python
+    plan: free
+    region: singapore
+    rootDir: ai/crop-recommendation
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.crop_api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: SERVICE_API_KEY
+        sync: false
+
+  - type: web
+    name: agrisense-fertilizer-ai
+    runtime: python
+    plan: free
+    region: singapore
+    rootDir: ai/fertilizer-recommendation
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.fertilizer_api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: SERVICE_API_KEY
+        sync: false

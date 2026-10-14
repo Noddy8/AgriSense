@@ -12,7 +12,16 @@ namespace agrisense.api.Services
     public class AgriSenseRepository
     {
         private readonly string _connectionString;
-        public AgriSenseRepository() { _connectionString = ConfigurationManager.ConnectionStrings["AgriSenseDb"].ConnectionString; }
+        public AgriSenseRepository()
+        {
+            // Cloud hosts inject secrets as environment variables. Keep Web.config as the
+            // local-development fallback so the existing SQL Server setup still works.
+            _connectionString = Environment.GetEnvironmentVariable("AGRISENSE_DB_CONNECTION_STRING");
+            if (String.IsNullOrWhiteSpace(_connectionString))
+                _connectionString = ConfigurationManager.ConnectionStrings["AgriSenseDb"].ConnectionString;
+            if (String.IsNullOrWhiteSpace(_connectionString))
+                throw new ConfigurationErrorsException("Set AGRISENSE_DB_CONNECTION_STRING or configure the AgriSenseDb connection string.");
+        }
         private SqlConnection Open() { var connection = new SqlConnection(_connectionString); connection.Open(); return connection; }
 
         public int GetOrCreateFirebaseUserId(string firebaseUid, string email, bool emailVerified, string fullName, string mobileNumber)

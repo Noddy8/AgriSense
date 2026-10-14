@@ -11,8 +11,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class ApiClient {
-    // Use with `adb reverse tcp:64719 tcp:64719` for a USB-connected phone or emulator.
-    private static final String BASE_URL = "http://localhost:64719/api/";
+    // Override at build time with -PAGRISENSE_API_BASE_URL=https://your-api-host/api/.
+    private static final String BASE_URL = BuildConfig.API_BASE_URL;
     private static Retrofit retrofit;
     private ApiClient() { }
 
@@ -21,6 +21,9 @@ public final class ApiClient {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
             OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(120, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
                     .addInterceptor(chain -> {
                         okhttp3.Request.Builder request = chain.request().newBuilder()
                                 .header("Accept", "application/json");

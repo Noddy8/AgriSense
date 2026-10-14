@@ -14,9 +14,12 @@ namespace agrisense.api.Services
         public CropAiServices()
         {
             _httpClient = new HttpClient();
-
-            _httpClient.BaseAddress =
-                new Uri("http://127.0.0.1:8000/");
+            var baseUrl = Environment.GetEnvironmentVariable("CROP_AI_BASE_URL");
+            if (String.IsNullOrWhiteSpace(baseUrl)) baseUrl = "http://127.0.0.1:8000/";
+            _httpClient.BaseAddress = new Uri(baseUrl.EndsWith("/") ? baseUrl : baseUrl + "/");
+            var serviceKey = Environment.GetEnvironmentVariable("AI_SERVICE_API_KEY");
+            if (!String.IsNullOrWhiteSpace(serviceKey)) _httpClient.DefaultRequestHeaders.Add("X-Service-Key", serviceKey);
+            _httpClient.Timeout = TimeSpan.FromSeconds(100);
         }
 
 

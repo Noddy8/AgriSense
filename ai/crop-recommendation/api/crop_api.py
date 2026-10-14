@@ -1,8 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, Field
 import joblib
 import numpy as np
 import os
+import secrets
 
 
 # --------------------------------------------------
@@ -14,6 +15,12 @@ app = FastAPI(
     description="Machine Learning Crop Recommendation API",
     version="1.0.0"
 )
+
+
+def require_service_key(x_service_key: str = Header(default="")):
+    expected = os.getenv("SERVICE_API_KEY")
+    if expected and not secrets.compare_digest(x_service_key, expected):
+        raise HTTPException(status_code=401, detail="Invalid service key")
 
 
 # --------------------------------------------------
@@ -123,7 +130,7 @@ def health():
 # CROP PREDICTION
 # --------------------------------------------------
 
-@app.post("/predict/crop")
+@app.post("/predict/crop", dependencies=[Depends(require_service_key)])
 def predict_crop(request: CropRequest):
 
     if model is None:

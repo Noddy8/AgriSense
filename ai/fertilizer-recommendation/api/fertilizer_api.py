@@ -4,8 +4,10 @@ from pathlib import Path
 import joblib
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, Field
+import os
+import secrets
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,6 +18,12 @@ FEATURES = ["crop", "soil_type", "nitrogen", "phosphorus", "potassium",
 app = FastAPI(title="AgriSense Fertilizer Recommendation Service", version="1.0.0")
 model = None
 model_error = None
+
+
+def require_service_key(x_service_key: str = Header(default="")):
+    expected = os.getenv("SERVICE_API_KEY")
+    if expected and not secrets.compare_digest(x_service_key, expected):
+        raise HTTPException(status_code=401, detail="Invalid service key")
 
 try:
     model = joblib.load(MODEL_PATH)
@@ -62,14 +70,14 @@ def health():
             "model_loaded": model is not None, "model_error": model_error}
 
 
-@app.get("/metadata/fertilizer")
+@app.get("/metadata/fertilizer", dependencies=[Depends(require_service_key)])
 def metadata():
     if model is None:
         raise HTTPException(status_code=503, detail="Fertilizer model is not loaded. See service startup output.")
     return {"success": True, **model_options(), "inputFields": FEATURES}
 
 
-@app.post("/predict/fertilizer")
+@app.post("/predict/fertilizer", dependencies=[Depends(require_service_key)])
 def predict_fertilizer(request: FertilizerRequest):
     if model is None:
         raise HTTPException(status_code=503, detail="Fertilizer model is not loaded. See service startup output.")
