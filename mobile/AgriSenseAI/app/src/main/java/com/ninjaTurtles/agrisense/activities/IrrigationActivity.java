@@ -14,7 +14,7 @@ import com.ninjaTurtles.agrisense.models.IrrigationStatus;
 import com.ninjaTurtles.agrisense.utils.AnimationHelper;
 import com.google.android.material.button.MaterialButton;
 
-public class IrrigationActivity extends AppCompatActivity {
+public class IrrigationActivity extends BaseActivity {
 
     private TextView tvPumpStatusTitle, tvWaterFlowIndicator, tvTankPercent;
     private View viewWaterFillLevel, containerTankOutline;
@@ -35,14 +35,8 @@ public class IrrigationActivity extends AppCompatActivity {
         btnStart = findViewById(R.id.btnStartIrrigation);
         btnStop = findViewById(R.id.btnStopIrrigation);
 
-        // Animate tank fill height on open (0% -> 74%)
-        containerTankOutline.post(new Runnable() {
-            @Override
-            public void run() {
-                int maxHeight = containerTankOutline.getHeight();
-                AnimationHelper.animateTankLevel(viewWaterFillLevel, 0, 74, maxHeight);
-            }
-        });
+        // Tank level is unavailable until water-level telemetry is part of the backend contract.
+        viewWaterFillLevel.setVisibility(View.GONE);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override

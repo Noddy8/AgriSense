@@ -40,6 +40,7 @@ public class FarmFragment extends Fragment {
             @Override
             public void onFarmClick(Farm farm) {
                 Intent intent = new Intent(getActivity(), FarmDetailsActivity.class);
+                intent.putExtra("farm_id", farm.getFarmId());
                 intent.putExtra("farm_name", farm.getName());
                 intent.putExtra("crop_type", farm.getCropType());
                 intent.putExtra("acres", farm.getAcres());

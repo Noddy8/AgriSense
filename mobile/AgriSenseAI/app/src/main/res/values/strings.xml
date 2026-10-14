@@ -115,6 +115,7 @@
     <string name="alert_notifications">Alert Notifications</string>
     <string name="unit_preference">Units (Metric / Imperial)</string>
     <string name="save_settings">Save Preferences</string>
+    <string name="theme_follows_system">Appearance follows your device’s light or dark theme.</string>
     <string name="retry">Retry</string>
     <string name="error_loading_sensors">⚠ Unable to load live sensor data</string>
 </resources>

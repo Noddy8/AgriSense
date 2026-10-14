@@ -9,7 +9,7 @@ import com.ninjaTurtles.agrisense.R;
 import com.ninjaTurtles.agrisense.utils.AnimationHelper;
 import com.google.android.material.button.MaterialButton;
 
-public class ForgotPasswordActivity extends AppCompatActivity {
+public class ForgotPasswordActivity extends BaseActivity {
 
     private MaterialButton btnSendReset;
 

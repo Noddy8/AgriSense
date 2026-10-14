@@ -68,9 +68,9 @@ public class FarmAdapter extends RecyclerView.Adapter<FarmAdapter.ViewHolder> {
 
         void bind(final Farm farm, final OnFarmClickListener listener) {
             tvFarmName.setText(farm.getName());
-            tvCropType.setText("Crop: " + farm.getCropType());
-            tvAcres.setText("Area: " + farm.getAcres() + " Acres");
-            tvHealthScore.setText(farm.getHealthScore() + "%");
+            tvCropType.setText("Soil: " + (farm.getSoilType() == null ? "Not set" : farm.getSoilType()));
+            tvAcres.setText(String.format(java.util.Locale.getDefault(), "Area: %.2f hectares", farm.getAreaHectares()));
+            tvHealthScore.setText(farm.getHealthScore() < 0 ? "—" : farm.getHealthScore() + "%");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

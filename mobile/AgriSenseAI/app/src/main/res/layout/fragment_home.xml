@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Good Morning, Farmer 👋"
+                    android:text="Hii, Farmer 👋"
                     android:textColor="@color/text_primary"
                     android:textSize="19sp"
                     android:textStyle="bold" />
@@ -100,7 +100,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Farm: My Farm (Green Valley #1)"
+                    android:id="@+id/tvFarmLabel"
+                    android:text="Farm: Connecting…"
                         android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
@@ -140,7 +141,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Live IoT"
+                        android:id="@+id/tvBackendMode"
+                        android:text="CONNECTING"
                         android:textColor="@color/primary"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -196,8 +198,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MICROCLIMATE OUTLOOK"
-                        android:textColor="#C0E0C0"
+                        android:text="FARM DATA STATUS"
+                        android:textColor="@color/on_primary_muted"
                         android:textSize="11sp"
                         android:textStyle="bold"
                         android:letterSpacing="0.05" />
@@ -206,7 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Favorable for vegetative growth"
+                        android:text="Weather forecast is not connected yet"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -233,7 +235,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="UV Index 4"
+                        android:text="NO FORECAST"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -305,7 +307,7 @@
                             android:id="@+id/tvValueMoisture"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="42"
+                            android:text="—"
                             android:textColor="@color/text_primary"
                             android:textSize="32sp"
                             android:textStyle="bold" />
@@ -334,7 +336,7 @@
                         android:layout_height="6dp"
                         android:layout_marginTop="10dp"
                         android:max="100"
-                        android:progress="42"
+                        android:progress="0"
                         android:progressDrawable="@drawable/layer_progress_green" />
 
                 </LinearLayout>
@@ -395,7 +397,7 @@
                             android:id="@+id/tvValueTemp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="29"
+                            android:text="—"
                             android:textColor="@color/text_primary"
                             android:textSize="32sp"
                             android:textStyle="bold" />
@@ -424,7 +426,7 @@
                         android:layout_height="6dp"
                         android:layout_marginTop="10dp"
                         android:max="100"
-                        android:progress="60"
+                        android:progress="0"
                         android:progressDrawable="@drawable/layer_progress_orange" />
 
                 </LinearLayout>
@@ -485,7 +487,7 @@
                             android:id="@+id/tvValueHumidity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="76"
+                            android:text="—"
                             android:textColor="@color/text_primary"
                             android:textSize="32sp"
                             android:textStyle="bold" />
@@ -514,7 +516,7 @@
                         android:layout_height="6dp"
                         android:layout_marginTop="10dp"
                         android:max="100"
-                        android:progress="76"
+                        android:progress="0"
                         android:progressDrawable="@drawable/layer_progress_dark_green" />
 
                 </LinearLayout>
@@ -575,7 +577,7 @@
                             android:id="@+id/tvValueTank"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="68"
+                            android:text="—"
                             android:textColor="@color/text_primary"
                             android:textSize="32sp"
                             android:textStyle="bold" />
@@ -604,7 +606,7 @@
                         android:layout_height="6dp"
                         android:layout_marginTop="10dp"
                         android:max="100"
-                        android:progress="68"
+                        android:progress="0"
                         android:progressDrawable="@drawable/layer_progress_dark_green" />
 
                 </LinearLayout>
@@ -696,7 +698,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Tank 68%"
+                        android:text="Tank level unavailable"
                         android:textColor="@color/text_primary"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -749,7 +751,7 @@
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        app:backgroundTint="#1E6023"
+                        app:backgroundTint="@color/primary_action"
                         app:cornerRadius="12dp"
                         app:icon="@drawable/ic_arrow_right"
                         app:iconGravity="textEnd"
@@ -844,7 +846,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:text="Optimal sowing: Rice..."
+                            android:text="Tap to request a model recommendation"
                             android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -864,7 +866,7 @@
                             android:background="@drawable/bg_pill_green_light"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
-                            android:text="94% Fit"
+                            android:text="MODEL"
                             android:textColor="@color/primary"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -1007,7 +1009,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:text="Urea NPK 4:2:1 top-dressing..."
+                            android:text="Type prediction only; no dose is inferred"
                             android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -1028,7 +1030,7 @@
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
                             android:text="Plot B"
-                            android:textColor="#E65100"
+                            android:textColor="@color/text_accent"
                             android:textSize="12sp"
                             android:textStyle="bold" />
 

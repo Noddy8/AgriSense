@@ -175,15 +175,27 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CropRecommendationController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FarmsController.cs" />
+    <Compile Include="Controllers\FertilizerRecommendationController.cs" />
+    <Compile Include="Controllers\HealthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SensorsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Models\FarmModels.cs" />
     <Compile Include="DTOs\Croprecommendationrequest.cs" />
     <Compile Include="DTOs\CropRecommendationResponse.cs" />
+    <Compile Include="DTOs\FertilizerRecommendationDtos.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CropAiServicecs.cs" />
+    <Compile Include="Services\AgriSenseRepository.cs" />
+    <Compile Include="Services\FirebaseAuthorizeAttribute.cs" />
+    <Compile Include="Services\FirebaseTokenValidator.cs" />
+    <Compile Include="Services\FirebaseUserContext.cs" />
+    <Compile Include="Services\FertilizerAiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

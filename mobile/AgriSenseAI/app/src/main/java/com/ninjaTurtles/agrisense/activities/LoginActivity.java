@@ -33,7 +33,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private ImageView imgLogo, imgTogglePassword;
     private MaterialButton btnLogin;
@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         imgTogglePassword = findViewById(R.id.imgTogglePassword);
 
         mAuth = FirebaseAuth.getInstance();
+        if (btnFingerprint != null && mAuth.getCurrentUser() == null) btnFingerprint.setVisibility(View.GONE);
 
         // Pre-fill demo credentials matching design
         // etEmail.setText("farmer@agrisense.com"); // Removed hardcoded email
@@ -202,6 +203,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
+                if (mAuth.getCurrentUser() == null) {
+                    Toast.makeText(getApplicationContext(), "Sign in with your Firebase account first.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Toast.makeText(getApplicationContext(), "Authentication succeeded!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);

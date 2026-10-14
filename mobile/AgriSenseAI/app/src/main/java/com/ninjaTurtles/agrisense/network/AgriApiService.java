@@ -1,40 +1,45 @@
 package com.ninjaTurtles.agrisense.network;
 
-import com.ninjaTurtles.agrisense.models.AlertNotification;
-import com.ninjaTurtles.agrisense.models.DiseaseResult;
+import com.ninjaTurtles.agrisense.models.CropPredictionResponse;
+import com.ninjaTurtles.agrisense.models.AccountBootstrapRequest;
+import com.ninjaTurtles.agrisense.models.DashboardResponse;
+import com.ninjaTurtles.agrisense.models.FertilizerOptions;
+import com.ninjaTurtles.agrisense.models.FertilizerPredictionRequest;
+import com.ninjaTurtles.agrisense.models.FertilizerPredictionResponse;
 import com.ninjaTurtles.agrisense.models.Farm;
-import com.ninjaTurtles.agrisense.models.IrrigationStatus;
-import com.ninjaTurtles.agrisense.models.Recommendation;
-import com.ninjaTurtles.agrisense.models.SensorData;
-import com.ninjaTurtles.agrisense.models.WeatherInfo;
-
+import com.ninjaTurtles.agrisense.models.SensorReading;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface AgriApiService {
+    @POST("account/bootstrap") Call<com.google.gson.JsonObject> bootstrapAccount(@Body AccountBootstrapRequest request);
+    @Headers("Accept: application/json")
+    @GET("farms") Call<List<Farm>> getFarms();
 
-    @GET("sensors/current")
-    Call<SensorData> getCurrentSensorData();
+    @Headers("Accept: application/json")
+    @GET("farms/{farmId}/dashboard") Call<DashboardResponse> getDashboard(@Path("farmId") int farmId);
 
-    @GET("weather/current")
-    Call<WeatherInfo> getWeatherInfo();
+    @Headers("Accept: application/json")
+    @GET("sensors/latest/{farmId}") Call<SensorReading> getLatestReading(@Path("farmId") int farmId);
 
-    @GET("farms")
-    Call<List<Farm>> getFarms();
+    @Headers("Accept: application/json")
+    @GET("sensors/history/{farmId}") Call<List<SensorReading>> getSensorHistory(@Path("farmId") int farmId, @Query("limit") int limit);
 
-    @GET("recommendations")
-    Call<List<Recommendation>> getRecommendations();
+    @Headers("Accept: application/json")
+    @POST("sensors/simulation/{farmId}") Call<SensorReading> applyScenario(@Path("farmId") int farmId, @Query("scenario") String scenario);
 
-    @GET("alerts")
-    Call<List<AlertNotification>> getAlerts();
+    @Headers("Accept: application/json")
+    @GET("recommendations/crop/{farmId}") Call<CropPredictionResponse> getCropRecommendation(@Path("farmId") int farmId);
 
-    @POST("irrigation/toggle")
-    Call<IrrigationStatus> toggleIrrigation(@Body IrrigationStatus status);
+    @Headers("Accept: application/json")
+    @GET("recommendations/fertilizer/options") Call<FertilizerOptions> getFertilizerOptions();
 
-    @POST("disease/analyze")
-    Call<DiseaseResult> analyzePlantDisease(@Body String imageBase64);
+    @Headers("Accept: application/json")
+    @POST("recommendations/fertilizer") Call<FertilizerPredictionResponse> getFertilizerRecommendation(@Body FertilizerPredictionRequest request);
 }

@@ -7,6 +7,8 @@ public class SensorData {
     private int waterTankLevel; // Percentage 0-100
     private double waterFlowRate; // L/min
     private String lastUpdated;
+    private double nitrogen, phosphorus, potassium, soilPh, rainfall;
+    private String source;
 
     public SensorData() {}
 
@@ -17,6 +19,14 @@ public class SensorData {
         this.waterTankLevel = waterTankLevel;
         this.waterFlowRate = waterFlowRate;
         this.lastUpdated = lastUpdated;
+    }
+
+    public SensorData(int soilMoisture, double temperature, int humidity, int waterTankLevel,
+                      double waterFlowRate, String lastUpdated, double nitrogen, double phosphorus,
+                      double potassium, double soilPh, double rainfall, String source) {
+        this(soilMoisture, temperature, humidity, waterTankLevel, waterFlowRate, lastUpdated);
+        this.nitrogen = nitrogen; this.phosphorus = phosphorus; this.potassium = potassium;
+        this.soilPh = soilPh; this.rainfall = rainfall; this.source = source;
     }
 
     public int getSoilMoisture() { return soilMoisture; }
@@ -36,4 +46,10 @@ public class SensorData {
 
     public String getLastUpdated() { return lastUpdated; }
     public void setLastUpdated(String lastUpdated) { this.lastUpdated = lastUpdated; }
+    public double getNitrogen() { return nitrogen; }
+    public double getPhosphorus() { return phosphorus; }
+    public double getPotassium() { return potassium; }
+    public double getSoilPh() { return soilPh; }
+    public double getRainfall() { return rainfall; }
+    public String getSource() { return source; }
 }

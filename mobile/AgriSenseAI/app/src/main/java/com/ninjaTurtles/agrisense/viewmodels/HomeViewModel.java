@@ -8,6 +8,7 @@ import com.ninjaTurtles.agrisense.models.IrrigationStatus;
 import com.ninjaTurtles.agrisense.models.Recommendation;
 import com.ninjaTurtles.agrisense.models.SensorData;
 import com.ninjaTurtles.agrisense.models.WeatherInfo;
+import com.ninjaTurtles.agrisense.models.Farm;
 
 import java.util.List;
 
@@ -34,4 +35,9 @@ public class HomeViewModel extends ViewModel {
     public LiveData<IrrigationStatus> getIrrigationStatus() {
         return repository.getIrrigationStatus();
     }
+
+    public LiveData<String> getConnectionStatus() { return repository.getConnectionStatus(); }
+    public LiveData<Farm> getActiveFarm() { return repository.getActiveFarm(); }
+    public void refreshFarms() { repository.refreshFarms(); }
+    public void refreshDashboard() { repository.refreshDashboard(); }
 }

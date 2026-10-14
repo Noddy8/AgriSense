@@ -732,4 +732,30 @@ AgriSense AI should eventually demonstrate:
 9. Notifications
 10. Irrigation automation architecture
 
+---
+
+# 23. IMPLEMENTATION SNAPSHOT — 2026-09-24
+
+This section supersedes older status/next-task notes above when describing the current repository state.
+
+Implemented in the current prototype:
+
+- SQL Server schema and seeded demo farm: `backend/database/001_initial_schema.sql`.
+- ASP.NET Web API endpoints for health, farms, dashboard summary, sensor reading ingestion, simulation presets, latest reading, and history.
+- C# → FastAPI crop recommendation flow. `GET /api/recommendations/crop/{farmId}` uses the latest stored reading and saves the recommendation; `POST /api/recommendations/crop` accepts the seven existing model features.
+- Python continuous random-walk simulator in `ai/sensor-simulator/simulator.py`. It posts explicitly simulated data to the C# API. No hardware is required.
+- Android Studio Java/XML dashboard in `mobile/AgriSenseAI`, using Retrofit to call C# only; dashboard polls every 10 seconds and supports one-off scenario presets.
+- Local run instructions in `docs/getting_started.md`.
+
+The Android client and backend form a demonstrable local prototype. Authentication, per-user farm authorization, fertilizer/irrigation decision services, disease analysis, assistant, weather, push notifications, hardware ingestion and actuator control remain unimplemented future modules. See `docs/getting_started.md` for the exact local service startup order and prototype boundaries.
+
 The system must be modular and demonstrable even without physical hardware.
+
+## 23.1 Fertilizer and Android integration update (2026-09-24)
+
+- The current Android project is the Java/XML app under `mobile/AgriSenseAI` using package `com.ninjaTurtles.agrisense`.
+- Its farms, dashboard, sensor history, crop recommendation and fertilizer recommendation screens consume C# endpoints via Retrofit. Existing demo-only modules are identified in `docs/getting_started.md`.
+- Fertilizer inference runs as an isolated Python FastAPI process on port 8001 with scikit-learn 1.8.0. This protects the existing crop service's scikit-learn 1.6.1 environment.
+- The model uses `crop`, `soil_type`, `nitrogen`, `phosphorus`, `potassium`, `temperature`, `humidity`, and `rainfall`. It predicts fertilizer class only, with model confidence; it does not determine dosage.
+- C# obtains the latest reading and farm metadata, calls the fertilizer service, and saves the result in `dbo.FertilizerRecommendations`. The Android recommendation screen can apply a sensor simulation preset before querying either model.
+- Setup and launch instructions are maintained in `docs/getting_started.md`.

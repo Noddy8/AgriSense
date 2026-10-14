@@ -20,8 +20,14 @@ import com.ninjaTurtles.agrisense.utils.AnimationHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.ninjaTurtles.agrisense.models.AccountBootstrapRequest;
+import com.ninjaTurtles.agrisense.network.ApiClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     private ImageView btnBack, imgToggleRegPassword, imgToggleConfirmPassword;
     private EditText etFullName, etRegEmail, etMobileNumber, etFarmName, etRegPassword, etConfirmPassword;
@@ -107,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String fullName = etFullName != null ? etFullName.getText().toString().trim() : "";
                 String email = etRegEmail != null ? etRegEmail.getText().toString().trim() : "";
                 String mobile = etMobileNumber != null ? etMobileNumber.getText().toString().trim() : "";
+                String farmName = etFarmName != null ? etFarmName.getText().toString().trim() : "";
                 String password = etRegPassword != null ? etRegPassword.getText().toString().trim() : "";
                 String confirmPassword = etConfirmPassword != null ? etConfirmPassword.getText().toString().trim() : "";
 
@@ -122,6 +129,11 @@ public class RegisterActivity extends AppCompatActivity {
                 
                 if (TextUtils.isEmpty(mobile)) {
                     etMobileNumber.setError("Mobile number is required");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(farmName)) {
+                    etFarmName.setError("Farm name is required");
                     return;
                 }
                 
@@ -146,18 +158,19 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 btnRegister.setEnabled(false);
+                if (mAuth.getCurrentUser() != null) {
+                    bootstrapAccount(fullName, farmName, mobile);
+                    return;
+                }
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
-                                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finishAffinity();
-                                    }
-                                }, 200);
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                if (user == null) { btnRegister.setEnabled(true); return; }
+                                UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(fullName).build();
+                                user.updateProfile(profile).addOnCompleteListener(profileTask ->
+                                        bootstrapAccount(fullName, farmName, mobile));
                             } else {
                                 Toast.makeText(RegisterActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 btnRegister.setEnabled(true);
@@ -174,6 +187,35 @@ public class RegisterActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+    }
+
+    private void bootstrapAccount(String fullName, String farmName, String mobile) {
+        btnRegister.setEnabled(false);
+        ApiClient.getApiService().bootstrapAccount(new AccountBootstrapRequest(fullName, farmName, mobile))
+                .enqueue(new Callback<com.google.gson.JsonObject>() {
+                    @Override public void onResponse(Call<com.google.gson.JsonObject> call, Response<com.google.gson.JsonObject> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(RegisterActivity.this, "Account and farm are ready.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finishAffinity();
+                        } else {
+                            btnRegister.setText("RETRY FARM SETUP");
+                            btnRegister.setEnabled(true);
+                            Toast.makeText(RegisterActivity.this,
+                                    "Account created, but farm setup failed (HTTP " + response.code() + "). Check the API and database, then tap retry.",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override public void onFailure(Call<com.google.gson.JsonObject> call, Throwable error) {
+                        btnRegister.setText("RETRY FARM SETUP");
+                        btnRegister.setEnabled(true);
+                        Toast.makeText(RegisterActivity.this,
+                                "Account created, but farm setup could not reach the API. Check the connection, then tap retry.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void setupLabelAsterisks() {

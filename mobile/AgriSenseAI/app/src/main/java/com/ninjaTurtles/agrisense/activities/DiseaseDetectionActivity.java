@@ -20,7 +20,7 @@ import com.ninjaTurtles.agrisense.viewmodels.DiseaseViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
-public class DiseaseDetectionActivity extends AppCompatActivity {
+public class DiseaseDetectionActivity extends BaseActivity {
 
     private DiseaseViewModel viewModel;
 

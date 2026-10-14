@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_dark"
+    android:background="@color/splash_background"
     android:gravity="center">
 
     <LinearLayout
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/tagline"
-            android:textColor="#C8E6C9"
+            android:textColor="@color/on_primary_muted"
             android:textSize="13sp"
             android:gravity="center"
             android:paddingHorizontal="32dp" />

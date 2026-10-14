@@ -36,4 +36,9 @@
     <color name="white">#FFFFFF</color>
     <color name="divider">#E0E4DC</color>
     <color name="ripple_light">#202E7D32</color>
+    <color name="on_primary_muted">#C8E6C9</color>
+    <color name="text_accent">#E65100</color>
+    <color name="brand_tint">#E8F8EA</color>
+    <color name="primary_action">#2E7D32</color>
+    <color name="splash_background">#1B5E20</color>
 </resources>

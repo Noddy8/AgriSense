@@ -10,10 +10,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
 
 import com.ninjaTurtles.agrisense.R;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     private ImageView imgLogo;
     private TextView tvTitle;
@@ -23,6 +24,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        androidx.core.view.WindowInsetsControllerCompat bars =
+                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        bars.setAppearanceLightStatusBars(false);
+        bars.setAppearanceLightNavigationBars(false);
 
         imgLogo = findViewById(R.id.imgSplashLogo);
         tvTitle = findViewById(R.id.tvSplashTitle);

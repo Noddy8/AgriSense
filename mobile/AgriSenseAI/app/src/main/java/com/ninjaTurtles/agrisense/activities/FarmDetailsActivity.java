@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.ninjaTurtles.agrisense.R;
 import com.google.android.material.button.MaterialButton;
 
-public class FarmDetailsActivity extends AppCompatActivity {
+public class FarmDetailsActivity extends BaseActivity {
 
     private TextView tvFarmName, tvCropType, tvFieldSize, tvSoilType, tvHealth;
     private MaterialButton btnViewSensors;
@@ -29,16 +29,20 @@ public class FarmDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             tvFarmName.setText(intent.getStringExtra("farm_name"));
-            tvCropType.setText("Crop Type: " + intent.getStringExtra("crop_type"));
-            tvFieldSize.setText("Field Size: " + intent.getDoubleExtra("acres", 10.0) + " Acres");
+            String crop = intent.getStringExtra("crop_type");
+            tvCropType.setText("Crop Type: " + (crop == null ? "Choose for recommendation" : crop));
+            tvFieldSize.setText(String.format(java.util.Locale.getDefault(), "Field Size: %.2f hectares", intent.getDoubleExtra("acres", 0.0)));
             tvSoilType.setText("Soil Type: " + intent.getStringExtra("soil_type"));
-            tvHealth.setText("Health Score: " + intent.getIntExtra("health_score", 90) + "%");
+            int health = intent.getIntExtra("health_score", -1);
+            tvHealth.setText("Health Score: " + (health < 0 ? "Not measured" : health + "%"));
         }
 
         btnViewSensors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(FarmDetailsActivity.class.cast(v.getContext()), SensorDataActivity.class));
+                Intent intent = new Intent(FarmDetailsActivity.this, SensorDataActivity.class);
+                intent.putExtra("farm_id", getIntent().getIntExtra("farm_id", 0));
+                startActivity(intent);
             }
         });
     }

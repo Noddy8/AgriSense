@@ -2,6 +2,8 @@ package com.ninjaTurtles.agrisense.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,13 @@ public class HomeFragment extends Fragment {
     private ProgressBar pbMoisture, pbTemp, pbHumidity, pbTank;
     private MaterialButton btnQuickControlIrrigation;
     private ImageView btnNotificationBell;
+    private TextView tvBackendMode, tvFarmLabel;
+    private final Handler refreshHandler = new Handler(Looper.getMainLooper());
+    private final Runnable refreshTask = new Runnable() {
+        @Override public void run() {
+            if (viewModel != null && isAdded()) { viewModel.refreshDashboard(); refreshHandler.postDelayed(this, 10000); }
+        }
+    };
 
     @Nullable
     @Override
@@ -63,6 +72,8 @@ public class HomeFragment extends Fragment {
 
         btnQuickControlIrrigation = v.findViewById(R.id.btnQuickControlIrrigation);
         btnNotificationBell = v.findViewById(R.id.btnNotificationBell);
+        tvBackendMode = v.findViewById(R.id.tvBackendMode);
+        tvFarmLabel = v.findViewById(R.id.tvFarmLabel);
 
         cardRecCrop = v.findViewById(R.id.cardRecCrop);
         cardRecIrrigation = v.findViewById(R.id.cardRecIrrigation);
@@ -82,24 +93,39 @@ public class HomeFragment extends Fragment {
 
         runStaggeredDashboardAnimations();
         observeViewModel();
+        viewModel.refreshFarms();
     }
+
+    @Override public void onResume() {
+        super.onResume();
+        if (viewModel != null) { viewModel.refreshDashboard(); refreshHandler.removeCallbacks(refreshTask); refreshHandler.postDelayed(refreshTask, 10000); }
+    }
+
+    @Override public void onPause() { refreshHandler.removeCallbacks(refreshTask); super.onPause(); }
 
     private void observeViewModel() {
         viewModel.getSensorData().observe(getViewLifecycleOwner(), new Observer<SensorData>() {
             @Override
             public void onChanged(SensorData data) {
                 if (data != null) {
-                    if (tvValueMoisture != null) tvValueMoisture.setText(String.valueOf(data.getSoilMoisture()));
+                    if (tvValueMoisture != null) tvValueMoisture.setText(data.getSoilMoisture() < 0 ? "—" : String.valueOf(data.getSoilMoisture()));
                     if (tvValueHumidity != null) tvValueHumidity.setText(String.valueOf(data.getHumidity()));
-                    if (tvValueTank != null) tvValueTank.setText(String.valueOf(data.getWaterTankLevel()));
+                    if (tvValueTank != null) tvValueTank.setText(data.getWaterTankLevel() < 0 ? "—" : String.valueOf(data.getWaterTankLevel()));
                     if (tvValueTemp != null) tvValueTemp.setText(String.valueOf((int) data.getTemperature()));
 
-                    if (pbMoisture != null) pbMoisture.setProgress(data.getSoilMoisture());
+                    if (pbMoisture != null) pbMoisture.setProgress(Math.max(0, data.getSoilMoisture()));
                     if (pbHumidity != null) pbHumidity.setProgress(data.getHumidity());
-                    if (pbTank != null) pbTank.setProgress(data.getWaterTankLevel());
+                    if (pbTank != null) pbTank.setProgress(Math.max(0, data.getWaterTankLevel()));
                     if (pbTemp != null) pbTemp.setProgress((int) Math.min(100, (data.getTemperature() / 50.0) * 100));
                 }
             }
+        });
+
+        viewModel.getConnectionStatus().observe(getViewLifecycleOwner(), status -> {
+            if (tvBackendMode != null) tvBackendMode.setText(status);
+        });
+        viewModel.getActiveFarm().observe(getViewLifecycleOwner(), farm -> {
+            if (farm != null && tvFarmLabel != null) tvFarmLabel.setText("Farm: " + farm.getName());
         });
 
         viewModel.getIrrigationStatus().observe(getViewLifecycleOwner(), new Observer<IrrigationStatus>() {
@@ -173,15 +199,14 @@ public class HomeFragment extends Fragment {
         if (cardTank != null) cardTank.setOnClickListener(openSensorsListener);
         if (cardViewAllSensors != null) cardViewAllSensors.setOnClickListener(openSensorsListener);
 
-        View.OnClickListener openRecsListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), RecommendationsActivity.class));
-            }
-        };
+        if (cardRecCrop != null) cardRecCrop.setOnClickListener(v -> openRecommendations("crop"));
+        if (cardRecFertilizer != null) cardRecFertilizer.setOnClickListener(v -> openRecommendations("fertilizer"));
+        if (cardRecIrrigation != null) cardRecIrrigation.setOnClickListener(v -> startActivity(new Intent(getActivity(), IrrigationActivity.class)));
+    }
 
-        if (cardRecCrop != null) cardRecCrop.setOnClickListener(openRecsListener);
-        if (cardRecIrrigation != null) cardRecIrrigation.setOnClickListener(openRecsListener);
-        if (cardRecFertilizer != null) cardRecFertilizer.setOnClickListener(openRecsListener);
+    private void openRecommendations(String type) {
+        Intent intent = new Intent(getActivity(), RecommendationsActivity.class);
+        intent.putExtra("type", type);
+        startActivity(intent);
     }
 }

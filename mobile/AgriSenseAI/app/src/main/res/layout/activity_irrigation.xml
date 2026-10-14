@@ -22,6 +22,15 @@
             android:textSize="26sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="Simulation controls only · no physical pump or tank is connected"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
         <!-- Pump Status Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -70,7 +79,7 @@
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
                         android:text="@string/start_irrigation"
-                        app:backgroundTint="@color/primary"
+                        app:backgroundTint="@color/primary_action"
                         app:cornerRadius="12dp" />
 
                     <com.google.android.material.button.MaterialButton
@@ -119,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="74%"
+                        android:text="Unavailable"
                         android:textColor="@color/sensor_tank"
                         android:textSize="20sp"
                         android:textStyle="bold" />

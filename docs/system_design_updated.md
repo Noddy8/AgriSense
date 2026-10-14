@@ -919,3 +919,13 @@ Not yet final:
 -   Final irrigation ML target
 -   Final fertilizer dataset/model features
 -   Final API contracts
+
+## 26.1 Repository implementation snapshot (2026-09-24)
+
+The repository now contains a locally runnable prototype slice across the database, backend, AI integration, simulator and Android client. The SQL schema is `backend/database/001_initial_schema.sql`; the Web API exposes health, farm, dashboard and sensor endpoints; and crop recommendations flow through C# to the existing seven-feature FastAPI model. `ai/sensor-simulator/simulator.py` generates and posts changing simulated readings. The Java/XML Android project under `mobile/AgriSenseAI` consumes the C# API and refreshes the dashboard every 10 seconds.
+
+This implementation status does not imply the rest of the product is complete. Authentication and authorization, fertilizer and irrigation recommendation services, disease analysis, assistant, weather, notifications, production security, ESP32 ingestion and actuator control remain future work. Run steps and exact current boundaries are documented in `docs/getting_started.md`.
+
+### Fertilizer model and Android integration update (2026-09-24)
+
+The Android project now uses Retrofit against the C# API for farms, the dashboard, recent sensor history, simulation presets and crop predictions. Fertilizer predictions use a separate FastAPI process on port 8001 because the supplied fertilizer pickle requires scikit-learn 1.8.0 while the existing crop environment remains on 1.6.1. C# sends the latest stored N/P/K and climate values plus selected crop and model soil category, then stores the response. The model classifies fertilizer type only; no application rate is inferred. Remaining demo-only modules and exact startup commands are listed in `docs/getting_started.md`.

@@ -1,0 +1,34 @@
+<resources>
+    <color name="primary">#64B96A</color>
+    <color name="primary_dark">#9BD49F</color>
+    <color name="primary_light">#294B2D</color>
+    <color name="accent">#FFD166</color>
+    <color name="accent_light">#4A3F1A</color>
+    <color name="brand_orange">#FFB36B</color>
+    <color name="background">#101711</color>
+    <color name="surface">#19221B</color>
+    <color name="text_primary">#E7ECE8</color>
+    <color name="text_secondary">#AAB7AD</color>
+    <color name="text_hint">#879489</color>
+    <color name="error">#FF8A80</color>
+    <color name="bg_input">#202A22</color>
+    <color name="bg_secondary_btn">#1C281E</color>
+    <color name="stroke_secondary_btn">#354638</color>
+    <color name="pill_bg">#203425</color>
+    <color name="pill_stroke">#38533B</color>
+    <color name="weather_icon_bg">#27432B</color>
+    <color name="sensor_moisture">#4FC3F7</color>
+    <color name="sensor_temp">#FFAB70</color>
+    <color name="sensor_humidity">#4DD0C2</color>
+    <color name="sensor_tank">#82B1FF</color>
+    <color name="live_green">#6ECF78</color>
+    <color name="live_green_alpha">#4D6ECF78</color>
+    <color name="card_stroke">#303C32</color>
+    <color name="divider">#303C32</color>
+    <color name="ripple_light">#3364B96A</color>
+    <color name="on_primary_muted">#C8E6C9</color>
+    <color name="text_accent">#FFB36B</color>
+    <color name="brand_tint">#214225</color>
+    <color name="primary_action">#286A31</color>
+    <color name="splash_background">#102A16</color>
+</resources>
